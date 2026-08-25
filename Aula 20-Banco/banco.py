@@ -13,7 +13,7 @@ def salvar_conta(conta):
    try:
 
       with open("conta.json", "w", encoding="utf-8") as f:
-         json.dump(conta, f, ensure_escii=False, indent=2)
+         json.dump(conta, f, ensure_ascii=False, indent=2)
       print("Conta guardada com sucesso!")
    except Exception as e:
       print(f"Erro ao guardar: {e}")
@@ -23,19 +23,19 @@ def depositar(conta, valor):
       print("O valor do deposito deve ser positivo.")
       return
    conta["saldo"] += valor
-   conta["historico"].append(f"Levantamento de R$ {valor:.2f}")
-   print(f"Levantamento realiado. Saldo atual: R$ {conta['saldo']:.2f}")
+   conta["historico"].append(f"Deposito de R$ {valor:.2f}")
+   print(f"Deposito realizado. Saldo atual: R$ {conta['saldo']:.2f}")
 
-def sacar (conta, valor):
- if valor <= 0:
-  print("X O valor do levantamento deve ser positivo.")
-  return
- if valor > conta["saldo"]:
-   print("X Saldo insuficiente para este levantamento.")
-   return
- conta["saldo"] -= valor
- conta["historico"].append(f"Levantamento de R$ {valor:.2f}")
- print(f" Levantamento realizado. Saldo atual: R$ {conta['saldo']:.2f}")
+def sacar(conta, valor):
+   if valor <= 0:
+      print("X O valor do levantamento deve ser positivo.")
+      return
+   if valor > conta["saldo"]:
+      print("X Saldo insuficiente para este levantamento.")
+      return
+   conta["saldo"] -= valor
+   conta["historico"].append(f"Levantamento de R$ {valor:.2f}")
+   print(f"Levantamento realizado. Saldo atual: R$ {conta['saldo']:.2f}")
 
 
 def extrato(conta):
@@ -43,45 +43,54 @@ def extrato(conta):
    if not conta["historico"]:
       print("Nenhuma movimentação ainda.")
    else:
-     for movimento in conta["historico"]:
-        print(f". {movimento}")
-        print(f"Saldo atual: R$ {conta['saldo']:.2f}")
+      for movimento in conta["historico"]:
+         print(f". {movimento}")
 
-     print("--- BEM-VINDO AO PYBANK ---")
-     conta = carregar_conta()
+   print(f"Saldo atual: R$ {conta['saldo']:.2f}")
 
-     if conta is None:
-        nome_input = input("Não encontramos nenhuma conta. Qual seu nome?")
-        conta = {
-           "titular": nome_input,
-           "saldo": 0.0,
-           "historico": []
-        }
-     else:
-        print(f"Bem vindo de volta. {conta['titular']}!")
 
-     while True:
-      print(f'\nSaldo atual: R$ {conta['saldo']:.2f}')
-      opcao = input("[1] Depositar| [2] Levantar | [3] Extrato | [4] Guardar e Sair: ")
+print("--- BEM-VINDO AO PYBANK ---")
+conta = carregar_conta()
 
-      if opcao == "1" or opcao == "2":
-         try:
-            valor = float(input("Valor: R$ "))
-         except ValueError:
-            print("Digite um numero valido. ")
-            continue
-         if opcao == "1":
-            depositar(conta, valor)
-         else:
-           sacar(conta, valor)
+if conta is None:
+   nome_input = input("Não encontramos nenhuma conta. Qual seu nome? ")
+   conta = {
+      "titular": "Daniel",
+      "cpf_rg": "8790",
+      "celular": "15997462847",
+      "email": "dd@gamil.com",
+      "idade": "18",
+      "estado_civil": "Solteiro",
+      "agencia": "002",
+      "conta": "1738.9568-1",
+      "saldo": 1.00,
+      "historico": []
+   }
+else:
+   print(f"Bem vindo de volta, {conta['titular']}!")
 
-      elif opcao == "3":
-       extrato(conta)
+while True:
+   print(f'\nSaldo atual: R$ {conta["saldo"]:.2f}')
+   opcao = input("[1] Depositar | [2] Levantar | [3] Extrato | [4] Guardar e Sair: ")
 
-      elif opcao == "4":
-         salvar_conta(conta)
-         break
+   if opcao == "1" or opcao == "2":
+      try:
+         valor = float(input("Valor: R$ "))
+      except ValueError:
+         print("Digite um numero valido.")
+         continue
 
+      if opcao == "1":
+         depositar(conta, valor)
       else:
-         print("Opção invalida.")
+         sacar(conta, valor)
 
+   elif opcao == "3":
+      extrato(conta)
+
+   elif opcao == "4":
+      salvar_conta(conta)
+      break
+
+   else:
+      print("Opção invalida.")

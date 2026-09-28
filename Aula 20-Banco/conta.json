@@ -1,0 +1,28 @@
+{
+  "1278.9508-2": {
+    "titular": "Derricko",
+    "pin": "9888",
+    "cpf_rg": "4280",
+    "celular": "15998562827",
+    "email": "De4r1ck0@gmail.com",
+    "idade": "18",
+    "estado_civil": "Solteiro",
+    "agencia": "088",
+    "conta": "1278.9508-2",
+    "saldo": 5.0,
+    "historico": [
+      "Depósito de R$ 3.00",
+      "Depósito de R$ 2.00"
+    ],
+    "saques": []
+  },
+  "2045.6731-8": {
+    "titular": "Danilo",
+    "pin": "1234",
+    "agencia": "088",
+    "conta": "2045.6731-8",
+    "saldo": 0.0,
+    "historico": [],
+    "saques": []
+  }
+}
